@@ -1,5 +1,6 @@
 package com.example.cameratest
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -56,6 +57,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnTakePhoto.setOnClickListener{
             takePhoto()
+            val intent = Intent(this, PictureAnalysis::class.java);
+
+            startActivity(intent)
         }
     }
 
