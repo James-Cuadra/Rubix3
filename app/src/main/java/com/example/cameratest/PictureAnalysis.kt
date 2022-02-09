@@ -8,6 +8,6 @@ class PictureAnalysis : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_picture_analysis)
 
-        val imgFile = File("/sdcard/Images/test_image.jpg")
+        val identifier = resources.getIdentifier("pic1", "drawable", "android.demo")
     }
 }
