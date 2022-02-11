@@ -1,8 +1,10 @@
 package com.example.cameratest
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,8 +28,8 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-
-
+import kotlinx.coroutines.delay
+import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
@@ -66,6 +68,7 @@ class MainActivity : AppCompatActivity() {
             img.setImageBitmap(this)
         }
 
+
         var directory = Uri.fromFile(File(outputDirectory, "photo.jpg"))
         binding.btnTakePhoto.setOnClickListener{
             takePhoto()
@@ -89,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         val photoFile = File(
             outputDirectory,
             "photo.jpg")
+        Log.d(TAG, photoFile.absolutePath)
         val outputOption = ImageCapture
             .OutputFileOptions.Builder(photoFile)
             .build()
@@ -175,4 +179,12 @@ class MainActivity : AppCompatActivity() {
         cameraExecutor.shutdown()
     }
 
+}
+
+fun Context.assetsToBitmap(fileName: String): Bitmap?{
+    return try {
+        with(assets.open(fileName)){
+            BitmapFactory.decodeStream(this)
+        }
+    } catch (e: IOException) { null }
 }

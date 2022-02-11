@@ -58,8 +58,15 @@ dependencies {
     implementation "androidx.camera:camera-view:1.0.0-alpha23"
 
     //Toolbar
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation "de.hdodenhof:circleimageview:3.1.0"
 
     //Computer Vision
-    implementation 'com.google.mlkit:image-labeling:17.0.3'
+    implementation "com.google.mlkit:image-labeling:17.0.3"
+
+    //Sleep
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.1"
+
+    //Palette
+    implementation 'androidx.palette:palette-ktx:1.0.0'
 }
