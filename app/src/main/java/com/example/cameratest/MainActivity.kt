@@ -2,10 +2,12 @@ package com.example.cameratest
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -55,32 +57,38 @@ class MainActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this, Constants.REQUIRED_PERMISSIONS, Constants.REQUEST_CODE_PERMISSIONS)
         }
 
+        val img: ImageView = findViewById(R.id.overview)
+        // assets folder image file name with extension
+        val fileName = "overlay.png"
+        // get bitmap from assets folder
+        val bitmap: Bitmap? = assetsToBitmap(fileName)
+        bitmap?.apply {
+            img.setImageBitmap(this)
+        }
+
+        var directory = Uri.fromFile(File(outputDirectory, "photo.jpg"))
         binding.btnTakePhoto.setOnClickListener{
             takePhoto()
             val intent = Intent(this, PictureAnalysis::class.java);
-
             startActivity(intent)
         }
     }
 
-    private fun getOutputDirectory(): File{
+     fun getOutputDirectory(): File{
         val mediaDir = externalMediaDirs.firstOrNull()?.let { mFile->
             File(mFile, resources.getString(R.string.app_name)).apply {
                 mkdirs()
             }
         }
-
-        return if (mediaDir != null && mediaDir.exists())
-            mediaDir else filesDir
+         return if (mediaDir != null && mediaDir.exists())
+             mediaDir else filesDir
     }
 
     private fun takePhoto(){
         val imageCapture = imageCapture ?: return
         val photoFile = File(
             outputDirectory,
-            SimpleDateFormat(Constants.FILE_NAME_FORMAT,
-                Locale.getDefault())
-                .format(System.currentTimeMillis())+".jpg")
+            "photo.jpg")
         val outputOption = ImageCapture
             .OutputFileOptions.Builder(photoFile)
             .build()
@@ -91,8 +99,9 @@ class MainActivity : AppCompatActivity() {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                     val savedUri = Uri.fromFile(photoFile)
                     val msg = "Photo Saved"
-
+                    Log.d(Constants.TAG, photoFile.getAbsolutePath().toString())
                     Toast.makeText(this@MainActivity, "$msg $savedUri", Toast.LENGTH_LONG).show()
+                    Log.d(Constants.TAG, "onImageSaved: $savedUri")
                 }
 
                 override fun onError(exception: ImageCaptureException) {

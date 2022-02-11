@@ -59,4 +59,7 @@ dependencies {
 
     //Toolbar
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //Computer Vision
+    implementation 'com.google.mlkit:image-labeling:17.0.3'
 }
