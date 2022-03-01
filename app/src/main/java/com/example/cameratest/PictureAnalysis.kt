@@ -18,6 +18,7 @@ import androidx.palette.graphics.Palette
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.List as List1
+import androidx.core.graphics.ColorUtils
 
 
 class PictureAnalysis : AppCompatActivity() {
@@ -61,10 +62,18 @@ fun getBitmaps(bitmap: Bitmap): List1<Bitmap> {
 
 fun getColours(bitmaps: kotlin.collections.List<Bitmap>): kotlin.collections.List<String> {
     val colours: MutableList<String> = ArrayList()
+    val hsvs = FloatArray(3)
     for (i in 1..9){
         val testPalette = Palette.from(bitmaps[i-1]).generate()
         val dominantCol = testPalette.getDominantColor(0)
-        colours.add(red(dominantCol).toString() +","+ green(dominantCol).toString() +","+ blue(dominantCol).toString())
+        ColorUtils.RGBToHSL(red(dominantCol), green(dominantCol), blue(dominantCol), hsvs)
+        val guessedCol = when (hsvs[0]){
+
+
+            else ->
+        }
+        colours.add(hsvs[0].toString())
+        //colours.add(red(dominantCol).toString() +","+ green(dominantCol).toString() +","+ blue(dominantCol).toString())
     }
 
 

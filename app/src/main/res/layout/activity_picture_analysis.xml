@@ -8,13 +8,14 @@
 
     <ImageView
         android:id="@+id/cubeView"
-        android:layout_width="408dp"
-        android:layout_height="408dp"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.275" />
 
     <TextView
         android:id="@+id/textView"
@@ -24,4 +25,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cubeView" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-44dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circle_imageView"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:padding="3dp"
+            android:src="@drawable/logo"
+            android:translationX="-15dp"
+            tools:layout_editor_absoluteX="16dp" />
+
+    </androidx.appcompat.widget.Toolbar>
 </androidx.constraintlayout.widget.ConstraintLayout>
