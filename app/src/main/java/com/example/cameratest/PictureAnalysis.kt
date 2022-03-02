@@ -67,18 +67,19 @@ fun getColours(bitmaps: kotlin.collections.List<Bitmap>): kotlin.collections.Lis
         val dominantCol = testPalette.getDominantColor(0)
         ColorUtils.RGBToHSL(red(dominantCol), green(dominantCol), blue(dominantCol), hsls)
         guessedCol = when ((hsls[2]*100).toInt()){
-            in 0..10 -> "White"
+            in 70..100 -> "White"
             else -> when (hsls[0].toInt()) {
                 in 0..10 -> "Red"
-                in 15..30 -> "Orange"
-                in 35..45 -> "Yellow"
-                in 70..95 -> "Green"
+                in 15..35 -> "Orange"
+                in 35..60 -> "Yellow"
+                in 70..150 -> "Green"
                 in 200..260 -> "Blue"
+                in 300..360 -> "Red"
                 else -> "Error"
             }
         }
         colours.add(guessedCol)
-        //colours.add((hsls[0]).toString())
+        colours.add((hsls[0]).toString())
         //colours.add(red(dominantCol).toString() +","+ green(dominantCol).toString() +","+ blue(dominantCol).toString())
     }
 
