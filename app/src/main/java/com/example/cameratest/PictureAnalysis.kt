@@ -31,15 +31,8 @@ class PictureAnalysis : AppCompatActivity() {
         val textView: TextView = findViewById(R.id.textView)
         Handler().postDelayed({
             var rawBitmap = BitmapFactory.decodeFile(filePath)
-            val matrix = Matrix()
-            matrix.postRotate(90.0F)
-            var straightBitmap = Bitmap.createBitmap(
-                rawBitmap, 0, 0, rawBitmap.width, rawBitmap.height, matrix, true
-            )
-            val length = 1800
-            val cubeSide = Bitmap.createBitmap(straightBitmap, (straightBitmap.width-length)/2,(straightBitmap.height-length)/2,length, length)
-            val bitmaps = getBitmaps(cubeSide)
-            cubeView.setImageBitmap(cubeSide)
+            val bitmaps = getBitmaps(rawBitmap)
+            cubeView.setImageBitmap(rawBitmap)
             val colours = getColours(bitmaps)
             textView.text = colours.toString()
                               }, 700)
@@ -47,12 +40,17 @@ class PictureAnalysis : AppCompatActivity() {
     }
 }
 fun getBitmaps(bitmap: Bitmap): List1<Bitmap> {
-
     val bitmaps: MutableList<Bitmap> = ArrayList()
-
+    val matrix = Matrix()
+    matrix.postRotate(90.0F)
+    var straightBitmap = Bitmap.createBitmap(
+        bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true
+    )
+    val length = 1800
+    val cubeSide = Bitmap.createBitmap(straightBitmap, (straightBitmap.width-length)/2,(straightBitmap.height-length)/2,length, length)
     for (i in 1..3) {
         for (j in 1..3){
-            bitmaps.add(Bitmap.createBitmap(bitmap, (j-1)*600, (i-1)*600, 600, 600))
+            bitmaps.add(Bitmap.createBitmap(cubeSide, (j-1)*600, (i-1)*600, 600, 600))
         }
     }
 
@@ -62,17 +60,25 @@ fun getBitmaps(bitmap: Bitmap): List1<Bitmap> {
 
 fun getColours(bitmaps: kotlin.collections.List<Bitmap>): kotlin.collections.List<String> {
     val colours: MutableList<String> = ArrayList()
-    val hsvs = FloatArray(3)
+    var guessedCol : String
+    val hsls = FloatArray(3)
     for (i in 1..9){
         val testPalette = Palette.from(bitmaps[i-1]).generate()
         val dominantCol = testPalette.getDominantColor(0)
-        ColorUtils.RGBToHSL(red(dominantCol), green(dominantCol), blue(dominantCol), hsvs)
-        val guessedCol = when (hsvs[0]){
-
-
-            else ->
+        ColorUtils.RGBToHSL(red(dominantCol), green(dominantCol), blue(dominantCol), hsls)
+        guessedCol = when ((hsls[2]*100).toInt()){
+            in 0..10 -> "White"
+            else -> when (hsls[0].toInt()) {
+                in 0..10 -> "Red"
+                in 15..30 -> "Orange"
+                in 35..45 -> "Yellow"
+                in 70..95 -> "Green"
+                in 200..260 -> "Blue"
+                else -> "Error"
+            }
         }
-        colours.add(hsvs[0].toString())
+        colours.add(guessedCol)
+        //colours.add((hsls[0]).toString())
         //colours.add(red(dominantCol).toString() +","+ green(dominantCol).toString() +","+ blue(dominantCol).toString())
     }
 
