@@ -79,8 +79,7 @@ fun getColours(bitmaps: kotlin.collections.List<Bitmap>): kotlin.collections.Lis
             }
         }
         colours.add(guessedCol)
-        colours.add((hsls[0]).toString())
-        //colours.add(red(dominantCol).toString() +","+ green(dominantCol).toString() +","+ blue(dominantCol).toString())
+        //colours.add((hsls[0]).toString())
     }
 
 
